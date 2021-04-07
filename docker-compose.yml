@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   web:
     build: .
@@ -6,7 +7,19 @@ services:
       - "5000:5000"
     volumes:
       - .:/code
+    links:
+      - db
     environment:
       FLASK_ENV: development
   redis:
     image: "redis:alpine"
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'product_viewer'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '123456'
+      MYSQL_ROOT_PASSWORD: '1237132758'
+    ports:
+      - "3306:3306"
