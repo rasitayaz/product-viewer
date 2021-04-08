@@ -14,10 +14,20 @@
 <body class="back1 centerText">
     <div class="horMid" style="max-width: 800px">
         <div class="pad-30">
-            <span class="right-20"><a class="zButton back2 zHov-back1 thinText rad-10 font-20" href="/">Home</a></span>
-            <span><a class="zButton back2 zHov-back1 thinText rad-10 font-20" href="/">Delete All</a></span>
+            <div class="right-20" style="display: inline-block;"><a class="zButton back2 zHov-back4 thinText rad-10 font-20" href="/">Home</a></div>
+            <div style="display: inline-block;">
+                <form method="POST">
+                    <div style="display: none;">
+                        <input value="delete_all" name="action" />
+                    </div>
+                    <button type="submit" class="zButton back2 zHov-back4 thinText rad-10 font-20">Delete All</button>
+                </form>
+            </div>
         </div>
         <div class="pad-30 whiteText">
+            {% if not products %}
+            There are currently no products stored in the database.
+            {% endif %}
             {% for p in products %}
             <div class="col-12 font0 back3 rad-20 bottom-20">
                 <div class="col-3 pad-20">
@@ -28,7 +38,15 @@
                     <div class="bottom-15">Name: {{ p[1] }}</div>
                     <div>Price: £{{ p[3] }}</div>
                 </div>
-                <div class="col-3 colBottom rightText pad-20"><button class="zButton back2 zHov-back1 thinText rad-10 font-20">Delete</button></div>
+                <div class="col-3 colBottom rightText pad-20">
+                    <form method="POST">
+                        <span style="display: none;">
+                            <input value="delete" name="action" />
+                            <input value="{{ p[0] }}" name="product_id" />
+                        </span>
+                        <button type="submit" class="zButton back2 zHov-back4 thinText rad-10 font-20">Delete</button>
+                    </form>
+                </div>
             </div>
             {% endfor %}
         </div>

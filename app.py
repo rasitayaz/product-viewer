@@ -43,7 +43,7 @@ def add_product():
             soup = BeautifulSoup(html)
 
             name = soup.find('div', {'data-component' : 'listing-page-title-component'}).find('h1').get_text().strip()
-            price = soup.find('div', {'data-buy-box-region' : 'price'}).find('p').get_text().strip()[1:]
+            price = soup.find('div', {'data-buy-box-region' : 'price'}).find('p').get_text().replace('Price:', '').replace('+', '').strip()[1:]
             image = soup.find('div', {'data-component' : 'listing-page-image-carousel'}).find('img')['src'].strip()
 
             sql = 'INSERT INTO Product (Name, Image, Price) VALUES (%s, %s, %s)'
@@ -55,15 +55,26 @@ def add_product():
             connection.close()
 
             message = f'"{name}" added to the database successfully.'
-        except (requests.exceptions.MissingSchema, AttributeError):
+        except (AttributeError, requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
             message = 'Invalid URL'
     
     return render_template('add_product.html', message = message)
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 def display_products():
     connection = connect()
     cursor = connection.cursor()
+
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'delete':
+            product_id = request.form['product_id']
+            cursor.execute(f'DELETE FROM Product WHERE ID={product_id}')
+            connection.commit()
+        elif action == 'delete_all':
+            cursor.execute('TRUNCATE TABLE Product')
+            connection.commit()
+
     cursor.execute('SELECT * FROM Product')
     rows = [list(i) for i in cursor.fetchall()]
     
