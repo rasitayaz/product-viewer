@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Add New Product</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet"> 
-        <script src="static/jquery-3.6.0.min.js"></script> 
-        <link rel="stylesheet" href="static/ultimate z/z.css" />
-        <link rel="stylesheet" href="static/styles.css" />
-        <script src="static/ultimate z/z.js"></script>
-    </head>
-    <body class="fullScr font0 back3 centerText">
-        <div class="hollyMid fontFix">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add New Product</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/ultimate-z/z.css" />
+    <link rel="stylesheet" href="static/styles.css" />
+    <script src="static/ultimate-z/z.js"></script>
+</head>
+
+<body class="fullScr back1 centerText">
+    <div class="hollyMid fontFix horMid" style="max-width: 800px">
+        <form class="zForm" method="POST">
             <div class="pad-25">
-                <a class="zButton back4 zHov-back3 thinText rad-10 font-20" href="/">Home</a>
+                <a class="zButton back2 zHov-back1 thinText rad-10 font-20" href="/">Home</a>
             </div>
-            <div class="pad-25 text2 horMid" style="max-width: 800px">
-                <form class="zForm">
-                    <input type="text" class="rad-10" placeholder="Enter the product URL"></input>
-                </form>
+            <div class="padT-30 padB-10 padLR-30 text2">
+                <input type="text" name="url" class="rad-10" placeholder="Enter the product URL"></input>
             </div>
-            <div class="pad-25">
-                <a class="zButton back4 zHov-back3 thinText rad-10 font-20" href="/">Add Product</a>
+            <div class="pad-30">
+                <button type="submit" class="zButton back2 zHov-back1 thinText rad-10 font-20">Add Product</button>
             </div>
-        </div>
-    </body>
+            {% if message %}
+            <div class="pad-30 whiteText">{{ message }}</div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+
 </html>
