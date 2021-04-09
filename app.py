@@ -21,6 +21,7 @@ def connect():
     cursor = connection.cursor()
     cursor.execute('CREATE DATABASE IF NOT EXISTS ProductViewer')
     cursor.execute('USE ProductViewer')
+    cursor.execute('CREATE TABLE IF NOT EXISTS Product (ID INT AUTO_INCREMENT PRIMARY KEY, Name VARCHAR(255), Image VARCHAR(255), Price FLOAT)')
 
     return connection
 
@@ -37,8 +38,6 @@ def add_product():
         url = request.form['url'].strip()
         
         try:
-            cursor.execute('CREATE TABLE IF NOT EXISTS Product (ID INT AUTO_INCREMENT PRIMARY KEY, Name VARCHAR(255), Image VARCHAR(255), Price FLOAT)')
-
             html = requests.get(url).text
             soup = BeautifulSoup(html)
 
